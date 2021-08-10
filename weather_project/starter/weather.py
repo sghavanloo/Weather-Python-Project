@@ -24,9 +24,6 @@ def convert_date(iso_string):
     Returns:
         A date formatted like: Weekday Date Month Year e.g. Tuesday 06 July 2021
     """
-   
-    #Example input
-    #2021-07-02T07:00:00+08:00
     from datetime import datetime
     date = datetime.strptime(iso_string,"%Y-%m-%dT%H:%M:%S%z")
     return date.strftime("%A %d %B %Y")
@@ -40,8 +37,6 @@ def convert_f_to_c(temp_in_farenheit):
     Returns:
         A float representing a temperature in degrees celcius, rounded to 1dp.
     """
-    
-# Fahrenheit = int()
 # Celsius = (Fahrenheit -32) * 5.0/9.0
     return round((float(temp_in_farenheit)-32)*(5/9),1) 
 
@@ -54,8 +49,6 @@ def calculate_mean(weather_data):
     Returns:
         A float representing the mean value.
     """
-    
-#need to install numpy
     weather_sum = 0
     for weather in weather_data:
             weather_sum += float(weather)
@@ -83,6 +76,7 @@ def load_data_from_csv(csv_file):
                 if line != [] and index !=0:
                     data.append([line[0],int(line[1]),int(line[2])])
     return data       
+
 
 def find_min(weather_data):
     """Calculates the minimum value in a list of numbers.
@@ -142,11 +136,10 @@ def generate_summary(weather_data):
 
     for index,item in enumerate(weather_data):
         if item !=[]:
-                # print(item)
-                count +=1
-                date_list.append(item[0])
-                min_temps.append(item[1])
-                max_temps.append(item[2])
+            count +=1
+            date_list.append(item[0])
+            min_temps.append(item[1])
+            max_temps.append(item[2])
         
     min_temp,index_date_min = find_min(min_temps)
     max_temp,index_date_max = find_max(max_temps)
@@ -166,9 +159,10 @@ def generate_summary(weather_data):
     output += f"  The highest temperature will be {format_temperature(max_temp_c)}, and will occur on {convert_date(date_max)}.\n"
     output += f"  The average low this week is {format_temperature(mean_min_c)}.\n"
     output += f"  The average high this week is {format_temperature(mean_max_c)}.\n"
-        # print(output)
     return output
 print(load_data_from_csv("tests/data/example_two.csv"))
+
+
 
 def generate_daily_summary(weather_data):
     """Outputs a daily summary for the given weather data.
@@ -185,3 +179,4 @@ def generate_daily_summary(weather_data):
         output += f"  Minimum Temperature: {format_temperature(convert_f_to_c(int(item[1])))}\n "
         output += f" Maximum Temperature: {format_temperature(convert_f_to_c(int(item[2])))}\n"
         output += f"\n"
+    return output
